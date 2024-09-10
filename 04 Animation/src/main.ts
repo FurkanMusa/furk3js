@@ -41,12 +41,18 @@ new OrbitControls(camera, renderer.domElement)
 const stats = new Stats()
 document.body.appendChild(stats.dom)
 
+// Delta Time
+const clock = new THREE.Clock()
+let delta
+
 // ~ A N I M A T E ~ //
 function animate() {
   requestAnimationFrame(animate)
 
-  cube.rotation.x += 0.01
-  cube.rotation.y += 0.01
+  delta = clock.getDelta()
+
+  cube.rotation.x += 0.3 * delta
+  cube.rotation.y += 0.3 * delta
 
   stats.update()
   
