@@ -90,5 +90,8 @@ function animate() {
 }
 
 
-
 animate()
+
+// FROM HERE:
+// https://sbcode.net/threejs/three-object3d/
+// https://tubitak.udemy.com/course/threejs-tutorials/learn/lecture/43195122#overview
