@@ -64,15 +64,9 @@ guiCamera.add(camera.position, "z", 0, 20)
 
 let activeScene = sceneA
 const setScene = {
-  sceneA: () => {
-    activeScene = sceneA
-  },
-  sceneB: () => {
-    activeScene = sceneB
-  },
-  sceneC: () => {
-    activeScene = sceneC
-  },
+  sceneA: () => { activeScene = sceneA },
+  sceneB: () => { activeScene = sceneB },
+  sceneC: () => { activeScene = sceneC },
 }
 
 const guiScene = gui.addFolder("Scenes")
