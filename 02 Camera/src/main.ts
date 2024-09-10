@@ -1,35 +1,31 @@
 import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import Stats from 'three/addons/libs/stats.module.js'
 import { GUI } from 'dat.gui'
 
-// Scene I
-const sceneA = new THREE.Scene()
+// Scene
+const scene = new THREE.Scene()
 
-// Scene II
-const sceneB = new THREE.Scene()
-sceneA.background = new THREE.Color(0x151517)
-
-// Scene III
-const sceneC = new THREE.Scene()
+// Grid
+scene.add(new THREE.GridHelper())
 
 // Skybox
-sceneC.background = new THREE.CubeTextureLoader()
+scene.background = new THREE.CubeTextureLoader()
 .setPath('https://sbcode.net/img/')
 .load(['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'])
-sceneC.backgroundBlurriness = 0
+scene.backgroundBlurriness = 0.1
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.z = 1.5
+camera.position.set(0, 2, 3)
+camera.lookAt(0, 0.5, 0)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
-// Window Properties
+// Window Resize listener for Aspect Ratio Calculation
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
@@ -41,10 +37,8 @@ const geometry = new THREE.BoxGeometry()
 const material = new THREE.MeshNormalMaterial({ wireframe: true })
 
 const cube = new THREE.Mesh(geometry, material)
-sceneA.add(cube)
-
-// Orbit Controls
-new OrbitControls(camera, renderer.domElement)
+cube.position.y = 0.5
+scene.add(cube)
 
 // Stats
 const stats = new Stats()
@@ -54,37 +48,33 @@ document.body.appendChild(stats.dom)
 const gui = new GUI()
 gui.close()
 
-const guiCube = gui.addFolder("Cube")
-guiCube.add(cube.rotation, "x", 0, Math.PI * 2)
-guiCube.add(cube.rotation, "y", 0, Math.PI * 2)
-guiCube.add(cube.rotation, "z", 0, Math.PI * 2)
-
-const guiCamera = gui.addFolder("Camera")
-guiCamera.add(camera.position, "z", 0, 20)
-
-let activeScene = sceneA
-const setScene = {
-  sceneA: () => { activeScene = sceneA },
-  sceneB: () => { activeScene = sceneB },
-  sceneC: () => { activeScene = sceneC },
-}
-
-const guiScene = gui.addFolder("Scenes")
-guiScene.add(setScene, 'sceneA').name('Scene A')
-guiScene.add(setScene, 'sceneB').name('Scene B')
-guiScene.add(setScene, 'sceneC').name('Scene C')
+const cameraFolder = gui.addFolder('Camera')
+cameraFolder.add(camera.position, 'x', -10, 10)
+cameraFolder.add(camera.position, 'y', -10, 10)
+cameraFolder.add(camera.position, 'z', -10, 10)
+cameraFolder.add(camera, 'fov', 0, 180, 0.01).onChange(() => {
+  camera.updateProjectionMatrix()
+})
+cameraFolder.add(camera, 'aspect', 0.00001, 10).onChange(() => {
+  camera.updateProjectionMatrix()
+})
+cameraFolder.add(camera, 'near', 0.01, 10).onChange(() => {
+  camera.updateProjectionMatrix()
+})
+cameraFolder.add(camera, 'far', 0.01, 10).onChange(() => {
+  camera.updateProjectionMatrix()
+})
 
 // ~ A N I M A T E ~ //
 function animate() {
   requestAnimationFrame(animate)
 
-  // cube.rotation.x += 0.01
-  // cube.rotation.y += 0.01
+  camera.lookAt(0, 0.5, 0)
 
-  stats.update() // Can be used with begin(), end().
+  stats.update()
   gui.updateDisplay()
   
-  renderer.render(activeScene, camera)
+  renderer.render(scene, camera)
 }
 
 
