@@ -16,8 +16,8 @@ scene.background = new THREE.CubeTextureLoader()
 scene.backgroundBlurriness = 0.1
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-camera.position.set(0, 2, 3)
+const camera = new THREE.OrthographicCamera(-4, 4, 4, -4, -5, 10)
+camera.position.set(1, 1, 1)
 camera.lookAt(0, 0.5, 0)
 
 // Renderer
@@ -27,7 +27,7 @@ document.body.appendChild(renderer.domElement)
 
 // Window Resize listener for Aspect Ratio Calculation
 window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight
+  // camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
 })
@@ -52,18 +52,25 @@ const cameraFolder = gui.addFolder('Camera')
 cameraFolder.add(camera.position, 'x', -10, 10)
 cameraFolder.add(camera.position, 'y', -10, 10)
 cameraFolder.add(camera.position, 'z', -10, 10)
-cameraFolder.add(camera, 'fov', 0, 180, 0.01).onChange(() => {
+cameraFolder.add(camera, 'left', -10, 0).onChange(() => {
   camera.updateProjectionMatrix()
 })
-cameraFolder.add(camera, 'aspect', 0.00001, 10).onChange(() => {
+cameraFolder.add(camera, 'right', 0, 10).onChange(() => {
   camera.updateProjectionMatrix()
 })
-cameraFolder.add(camera, 'near', 0.01, 10).onChange(() => {
+cameraFolder.add(camera, 'top', 0, 10).onChange(() => {
   camera.updateProjectionMatrix()
 })
-cameraFolder.add(camera, 'far', 0.01, 10).onChange(() => {
+cameraFolder.add(camera, 'bottom', -10, 0).onChange(() => {
   camera.updateProjectionMatrix()
 })
+cameraFolder.add(camera, 'near', -5, 5).onChange(() => {
+  camera.updateProjectionMatrix()
+})
+cameraFolder.add(camera, 'far', 0, 10).onChange(() => {
+  camera.updateProjectionMatrix()
+})
+cameraFolder.open()
 
 // ~ A N I M A T E ~ //
 function animate() {
