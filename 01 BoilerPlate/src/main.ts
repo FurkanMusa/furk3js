@@ -6,10 +6,12 @@ import { GUI } from 'dat.gui'
 
 // Scene I
 const sceneA = new THREE.Scene()
+sceneA.background = new THREE.Color(0x151517)
 
 // Scene II
 const sceneB = new THREE.Scene()
-sceneA.background = new THREE.Color(0x151517)
+sceneB.background = new THREE.TextureLoader()
+.load('https://t4.ftcdn.net/jpg/05/59/91/77/360_F_559917754_dPi14NuRWEofju2XA0Jz07kSITgjYYJm.jpg')
 
 // Scene III
 const sceneC = new THREE.Scene()
@@ -64,9 +66,9 @@ guiCamera.add(camera.position, "z", 0, 20)
 
 let activeScene = sceneA
 const setScene = {
-  sceneA: () => { activeScene = sceneA },
-  sceneB: () => { activeScene = sceneB },
-  sceneC: () => { activeScene = sceneC },
+  sceneA: () => { activeScene = sceneA; sceneA.add(cube); },
+  sceneB: () => { activeScene = sceneB; sceneB.add(cube); },
+  sceneC: () => { activeScene = sceneC; sceneC.add(cube); },
 }
 
 const guiScene = gui.addFolder("Scenes")
