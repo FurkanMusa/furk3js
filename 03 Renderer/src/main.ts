@@ -1,7 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
-import Stats from 'three/addons/libs/stats.module.js'
-import { GUI } from 'dat.gui'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 
 // Scene
 const scene = new THREE.Scene()
@@ -16,21 +15,16 @@ scene.background = new THREE.CubeTextureLoader()
 scene.backgroundBlurriness = 0.1
 
 // Camera
-const camera = new THREE.OrthographicCamera(-4, 4, 4, -4, -5, 10)
-camera.position.set(1, 1, 1)
-camera.lookAt(0, 0.5, 0)
+const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+camera.position.z = 1.5
+camera.position.y = 0.5
+
+// Canvas
+const canvas = document.getElementById('canvasim') as HTMLCanvasElement
 
 // Renderer
-const renderer = new THREE.WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
-document.body.appendChild(renderer.domElement)
-
-// Window Resize listener for Aspect Ratio Calculation
-window.addEventListener('resize', () => {
-  // camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
-  renderer.setSize(window.innerWidth, window.innerHeight)
-})
+const renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true})
+renderer.setSize(400, 400)
 
 // Cube
 const geometry = new THREE.BoxGeometry()
@@ -40,46 +34,14 @@ const cube = new THREE.Mesh(geometry, material)
 cube.position.y = 0.5
 scene.add(cube)
 
-// Stats
-const stats = new Stats()
-document.body.appendChild(stats.dom)
-
-// GUI
-const gui = new GUI()
-gui.close()
-
-const cameraFolder = gui.addFolder('Camera')
-cameraFolder.add(camera.position, 'x', -10, 10)
-cameraFolder.add(camera.position, 'y', -10, 10)
-cameraFolder.add(camera.position, 'z', -10, 10)
-cameraFolder.add(camera, 'left', -10, 0).onChange(() => {
-  camera.updateProjectionMatrix()
-})
-cameraFolder.add(camera, 'right', 0, 10).onChange(() => {
-  camera.updateProjectionMatrix()
-})
-cameraFolder.add(camera, 'top', 0, 10).onChange(() => {
-  camera.updateProjectionMatrix()
-})
-cameraFolder.add(camera, 'bottom', -10, 0).onChange(() => {
-  camera.updateProjectionMatrix()
-})
-cameraFolder.add(camera, 'near', -5, 5).onChange(() => {
-  camera.updateProjectionMatrix()
-})
-cameraFolder.add(camera, 'far', 0, 10).onChange(() => {
-  camera.updateProjectionMatrix()
-})
-cameraFolder.open()
+// Orbit Controls
+new OrbitControls(camera, renderer.domElement)
 
 // ~ A N I M A T E ~ //
 function animate() {
   requestAnimationFrame(animate)
 
   camera.lookAt(0, 0.5, 0)
-
-  stats.update()
-  gui.updateDisplay()
   
   renderer.render(scene, camera)
 }
