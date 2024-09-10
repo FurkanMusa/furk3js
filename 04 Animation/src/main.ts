@@ -85,6 +85,7 @@ function animate() {
   cube.rotation.y += 0.3 * delta
 
   stats.update()
+  gui.updateDisplay()
   
   renderer.render(scene, camera)
 }
