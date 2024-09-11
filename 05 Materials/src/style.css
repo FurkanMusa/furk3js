@@ -1,15 +1,17 @@
 body {
-  background-color: black;
-  color: antiquewhite;
+  /*background-color: black;*/
+  /*color: antiquewhite;*/
   overflow: hidden;
   margin: 0px;
+  /*
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  */
 }
-
+/*
 #debug {
   font-family: monospace;
   font-size: larger;
@@ -22,4 +24,17 @@ body {
   height: 310px;
   color: white;
   pointer-events: none;
+}
+*/
+.label {
+  position: absolute;
+  color: #ffffff;
+  font-family: monospace;
+  pointer-events: none;
+  text-align: center;
+  width: 75px;
+  height: 25px;
+  font-size: 1vw;
+  filter: drop-shadow(2px 2px 1px #000000);
+  display: none;
 }
