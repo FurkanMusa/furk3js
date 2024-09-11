@@ -104,14 +104,14 @@ function updateMaterial() {
 }
 
 // Delta Time
-const clock = new THREE.Clock()
-let delta
+// const clock = new THREE.Clock()
+// let delta
 
 // ~ A N I M A T E ~ //
 function animate() {
   requestAnimationFrame(animate)
 
-  delta = clock.getDelta()
+  //delta = clock.getDelta()
 
   // cube.rotation.x += 0.3 * delta
   // cube.rotation.y += 0.3 * delta
