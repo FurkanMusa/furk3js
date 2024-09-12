@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@monogrid/gainmap-js": "^3.0.6",
     "@types/three": "^0.168.0",
     "three": "^0.168.0",
     "typescript": "^5.5.3",
