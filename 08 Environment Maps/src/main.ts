@@ -80,7 +80,14 @@ plane.position.y = -1
 plane.visible = false
 scene.add(plane)
 
-new GLTFLoader().load('https://sbcode.net/models/suzanne_no_material.glb', (gltf) => {
+// new GLTFLoader().load('https://sbcode.net/models/suzanne_no_material.glb', (gltf) => {
+//   gltf.scene.traverse((child) => {
+//     ;(child as THREE.Mesh).material = material
+//   })
+//   scene.add(gltf.scene)
+// })
+
+new GLTFLoader().load('diamond.glb', (gltf) => {
   gltf.scene.traverse((child) => {
     ;(child as THREE.Mesh).material = material
   })
