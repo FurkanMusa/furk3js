@@ -78,19 +78,19 @@ meshes[1].position.set(-1, 1, 0)
 meshes[2].position.set(1, 1, 0)
 meshes[3].position.set(3, 1, 0)
 
-meshes[0].castShadow = true
-meshes[1].castShadow = true
-meshes[2].castShadow = true
-meshes[3].castShadow = true
+// meshes[0].castShadow = true
+// meshes[1].castShadow = true
+// meshes[2].castShadow = true
+// meshes[3].castShadow = true
 
-//meshes.map((m) => (m.castShadow = true)) // using array map
-meshes.map((m) => (m.receiveShadow = true))
+// meshes.map((m) => (m.castShadow = true)) // using array map
+// meshes.map((m) => (m.receiveShadow = true))
 
 // and instead of using `meshes.map` on two lines in a row, you can use once and share it like,
-// meshes.map((m) => {
-//   m.castShadow = true
-//   m.receiveShadow = true
-// })
+meshes.map((m) => {
+  m.castShadow = true
+  m.receiveShadow = true
+})
 
 scene.add(...meshes)
 
