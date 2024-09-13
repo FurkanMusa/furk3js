@@ -7,6 +7,8 @@ import { GUI } from 'three/addons/libs/lil-gui.module.min.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 
+import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js'
+
 // Scene
 const scene = new THREE.Scene()
 
@@ -26,7 +28,7 @@ new RGBELoader().load(hdr, (texture) => {
 })
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500)
 camera.position.set(2, 1, -2)
 
 // Renderer
@@ -105,7 +107,7 @@ loader.load('models/suv_wheel.glb', function (gltf) {
 // USE PROMISES
 async function loadCar() {
   const loader = new GLTFLoader()
-  
+
   const [...model] = await Promise.all(
     [
       loader.loadAsync(suvBodyModel), 
@@ -135,7 +137,19 @@ console.log("sonra")
 
 
 // Lights
-//
+const light = new THREE.SpotLight(undefined, Math.PI * 100)
+light.position.set(-5, 5, 5)
+light.angle = Math.PI / 16
+light.castShadow = true
+scene.add(light)
+
+// Lens Flare
+const textureLoader = new THREE.TextureLoader()
+const textureFlare0 = textureLoader.load('https://cdn.jsdelivr.net/gh/Sean-Bradley/First-Car-Shooter@main/dist/client/img/lensflare0.png')
+
+const lensflare = new Lensflare()
+lensflare.addElement(new LensflareElement(textureFlare0, 1000, 0))
+light.add(lensflare)
 
 // Orbit Controls
 const controls = new OrbitControls(camera, renderer.domElement)
