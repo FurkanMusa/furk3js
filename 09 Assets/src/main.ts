@@ -57,7 +57,8 @@ renderer.render(scene, camera)
 // Get cars and models here: https://kenney.nl/assets/car-kit
 let suvModel: THREE.Object3D
 const suvBodyModel = 'models/suv_body.glb'
-const suvWheelModel = 'models/suv_wheel.glb'
+// const suvWheelModel = 'models/suv_wheel.glb'
+const suvWheelModel = 'models/fish.glb'
 
 /*
 const loader = new GLTFLoader()
@@ -118,12 +119,14 @@ async function loadCar() {
   suvModel = model[0].scene
   const wheels = [model[1].scene, model[1].scene.clone(), model[1].scene.clone(), model[1].scene.clone()]
 
+  wheels[0].rotateY(Math.PI)
+  wheels[1].rotateY(Math.PI)
+  wheels[2].rotateY(Math.PI)
+  wheels[3].rotateY(Math.PI)
   wheels[0].position.set(-0.65, 0.2, -0.77)
   wheels[1].position.set(0.65, 0.2, -0.77)
-  wheels[1].rotateY(Math.PI)
   wheels[2].position.set(-0.65, 0.2, 0.57)
   wheels[3].position.set(0.65, 0.2, 0.57)
-  wheels[3].rotateY(Math.PI)
   suvModel.add(...wheels)
   
   scene.add(suvModel)
@@ -134,6 +137,62 @@ async function loadCar() {
 console.log("önce")
 await loadCar()
 console.log("sonra")
+
+/*
+let fishModel: THREE.Object3D
+const fishSkinModel = 'models/fish.glb'
+const fishBoneModel = 'models/fish-bones.glb'
+
+
+const loader = new GLTFLoader()
+loader.load(fishSkinModel, (gltf) => {
+  fishModel = gltf.scene
+
+  loader.load(fishSkinModel, (gltf) => {
+    const wheels = [gltf.scene, gltf.scene.clone(), gltf.scene.clone(), gltf.scene.clone()]
+
+    gltf.scene
+    wheels[0].position.set(-0.65, 0.2, -0.77)
+    wheels[1].position.set(0.65, 0.2, -0.77)
+    wheels[1].rotateY(Math.PI)
+    wheels[2].position.set(-0.65, 0.2, 0.57)
+    wheels[3].position.set(0.65, 0.2, 0.57)
+    wheels[3].rotateY(Math.PI)
+
+    fishModel.add(...wheels)
+  })
+
+  scene.add(fishModel)
+})
+*/
+
+
+
+/*
+async function loadFish() {
+  const loader = new GLTFLoader()
+
+  const [...model] = await Promise.all(
+    [
+      loader.loadAsync(fishSkinModel), 
+      loader.loadAsync(fishBoneModel)
+    ]
+  )
+
+  const models = [model[0].scene, model[1].scene]
+
+  models[0].position.set(-0.65, 0.2, -0.77)
+  models[1].position.set(0.65, 0.2, -0.77)
+  models[1].rotateY(Math.PI)
+  fishModel.add(...models)
+  
+  scene.add(fishModel)
+}
+
+await loadFish()
+*/
+
+
 
 
 // Lights
